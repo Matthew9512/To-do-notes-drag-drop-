@@ -125,20 +125,29 @@ body {
 }
 .sections__container .section__input::placeholder {
   opacity: 0.8;
+  font-style: italic;
 }
 .sections__container .section__drag-area {
   margin-bottom: 1em;
-  border-radius: 0.4em;
-  text-align: center;
+  padding-block: 0.2em;
   width: 100%;
-  padding-block: 0.5em;
+  text-align: center;
+}
+.sections__container .section__drag-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 0.4em;
+  padding: 0.5em 0.4em;
+  margin-top: 1.2em;
 }
 .sections__container .section__new-task {
-  margin-top: 1em;
-  padding: 0.6em 0.4em;
-  border-radius: 0.4em;
-  text-align: center;
-  background-color: #fff;
+  width: 85%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 .sections__container .section__btn {
   outline: none;
@@ -147,7 +156,7 @@ body {
   background-color: #1a317a;
   color: #fff;
   border-radius: 0.4em;
-  padding: 0.6em 0.4em;
+  padding: 0.5em 0.4em;
 }
 .sections__container .section__btn:hover {
   cursor: pointer;

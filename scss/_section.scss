@@ -39,23 +39,33 @@ $fontWeight700: 700;
 
       &::placeholder {
         opacity: 0.8;
+        font-style: italic;
       }
     }
 
     &__drag-area {
       margin-bottom: 1em;
-      border-radius: 0.4em;
-      text-align: center;
+      padding-block: 0.2em;
       width: 100%;
-      padding-block: 0.5em;
+      text-align: center;
+    }
+
+    &__drag-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: $backgroundWhite;
+      width: 100%;
+      border-radius: 0.4em;
+      padding: 0.5em 0.4em;
+      margin-top: 1.2em;
     }
 
     &__new-task {
-      margin-top: 1em;
-      padding: 0.6em 0.4em;
-      border-radius: 0.4em;
-      text-align: center;
-      background-color: $backgroundWhite;
+      width: 85%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
     }
 
     &__btn {
@@ -65,7 +75,7 @@ $fontWeight700: 700;
       background-color: $backgroundBtnDarkBlue;
       color: $fontColorBtnWhite;
       border-radius: 0.4em;
-      padding: 0.6em 0.4em;
+      padding: 0.5em 0.4em;
 
       &:hover {
         cursor: pointer;
