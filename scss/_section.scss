@@ -1,0 +1,80 @@
+$backgroundWhite: #fff;
+$backgroundBlue: #1943cf;
+$backgroundBtnDarkBlue: #1a317a;
+$backgroundBtnHover: #172a66;
+
+$fontColorBrown: hsl(25, 47%, 15%);
+$fontColorLightWhite: rgb(227, 227, 227);
+$fontColorBtnWhite: #fff;
+
+$fontWeight400: 400;
+$fontWeight700: 700;
+
+.sections__container {
+  background-color: $backgroundBlue;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  padding: 1em;
+  border-radius: 0.5em;
+  flex-wrap: wrap;
+
+  .section {
+    text-align: center;
+    min-height: 15em;
+    width: 12em;
+
+    &__header {
+      color: $fontColorBtnWhite;
+      opacity: 0.9;
+    }
+
+    &__input {
+      width: 100%;
+      outline: none;
+      border: none;
+      border-radius: 0.4em;
+      margin-top: 1em;
+      padding: 0.6em 0.4em;
+
+      &::placeholder {
+        opacity: 0.8;
+      }
+    }
+
+    &__drag-area {
+      margin-bottom: 1em;
+      border-radius: 0.4em;
+      text-align: center;
+      width: 100%;
+      padding-block: 0.5em;
+    }
+
+    &__new-task {
+      margin-top: 1em;
+      padding: 0.6em 0.4em;
+      border-radius: 0.4em;
+      text-align: center;
+      background-color: $backgroundWhite;
+    }
+
+    &__btn {
+      outline: none;
+      border: none;
+      width: 100%;
+      background-color: $backgroundBtnDarkBlue;
+      color: $fontColorBtnWhite;
+      border-radius: 0.4em;
+      padding: 0.6em 0.4em;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $backgroundBtnHover;
+      }
+    }
+  }
+
+  .learn-section {
+    margin-inline: 1em;
+  }
+}

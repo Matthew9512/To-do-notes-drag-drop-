@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/dist/main.css" />
+    <script defer src="app.js"></script>
+    <title>To do notes</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1 class="container-header">Manage your tasks</h1>
+      <!-- sections container -->
+      <article class="sections__container">
+        <!-- next-projects-section -->
+        <section class="section next-projects-section">
+          <h2 class="section__header">Next</h2>
+          <article class="section__wrapper">
+            <input type="text" class="inp section__input" placeholder="add task" />
+            <div class="section__drag-area"></div>
+            <button class="section__btn">+ Add</button>
+          </article>
+        </section>
+        <!-- learn-section -->
+        <section class="section learn-section">
+          <h2 class="section__header">Learn</h2>
+          <article class="section__wrapper">
+            <input type="text" class="inp section__input" placeholder="add task" />
+            <!--  -->
+            <div class="section__drag-area"></div>
+            <button class="section__btn">+ Add</button>
+          </article>
+        </section>
+        <!-- completed-section -->
+        <section class="section completed-section">
+          <h2 class="section__header">Completed</h2>
+          <article class="section__wrapper">
+            <input type="text" class="inp section__input" placeholder="add task" />
+            <div class="section__drag-area"></div>
+            <button class="section__btn">+ Add</button>
+          </article>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
