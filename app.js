@@ -18,6 +18,7 @@ const currentItemData = (e) => {
     stateObject.location = click.closest('.section');
 
     addTask();
+    updateLS();
 
     input.value = '';
   }
@@ -58,6 +59,19 @@ sectionDragArea.forEach((area) => {
     area.appendChild(dragging);
   });
 });
+
+// localStorage
+// getLocalStorage
+const getLS = () => {
+  const lsArr = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
+  return lsArr;
+};
+
+const updateLS = () => {
+  const lsArr = getLS();
+  lsArr.push(stateObject.value);
+  localStorage.setItem('notes', JSON.stringify(lsArr));
+};
 
 //
 sectionsContainer.addEventListener('click', currentItemData);
