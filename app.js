@@ -30,7 +30,7 @@ const addTask = () => {
   console.log(click);
   // id of the task
   let id = new Date().getTime().toString();
-  let parentID = stateObject.location.id;
+  let parentID = stateObject.location.dataset.location;
 
   stateObject.noteId = id;
 
@@ -111,32 +111,58 @@ const removeLS = (target) => {
   localStorage.setItem('notes', JSON.stringify(lsItems));
 };
 
+// template to retrive item from localStorage
+const template = (item) => {
+  return `
+    <div draggable="true" class="section__drag-item" data-id="${item.id}">
+    <p class="section__new-task">${item.value}</p>
+    <i class="delete fa-solid fa-xmark"></i>`;
+};
+
 // === domcontentloaded function
 const loadDisplay = () => {
+  const nextProjectsSection = document.querySelector('#next');
+  const learnProjectsSection = document.querySelector('#learn');
+  const completedProjectsSection = document.querySelector('#completed');
+
   const lsArr = getLS();
-  console.log(lsArr);
+
   if (!lsArr.length) return;
-  console.log(`you have some notes in your notes folder`);
 
-  // for (let ls in lsArr) {
-  //   const m = document.querySelector(`#${lsArr[ls].location}`);
-  //   console.log(m);
-  //   m.innerHTML = `<div draggable="true" class="section__drag-item" data-id="${lsArr.at(ls).id}">
-  //   <p class="section__new-task">${lsArr.at(ls).value}</p>
-  //   <i class="delete fa-solid fa-xmark"></i>
-  // </div>`;
-  // }
+  const lsNextSection = lsArr.filter((item) => item.location === 'next');
+  lsNextSection.forEach((item) => {
+    const lsItems = template(item);
+    nextProjectsSection.innerHTML += lsItems;
+  });
 
-  // const parent = lsArr.at(1).location;
-  // console.log(parent);
-  // const y = document.querySelector(`#${parent}`);
-  // console.log(y);
-  // const qw = y.querySelector('.section__drag-area');
-  // qw.innerHTML = `
-  // <div draggable="true" class="section__drag-item" data-id="${lsArr.at(0).id}">
-  //   <p class="section__new-task">${lsArr.at(0).value}</p>
-  //   <i class="delete fa-solid fa-xmark"></i>
-  // </div>`;
+  const lsLearnSection = lsArr.filter((item) => item.location === 'learn');
+  lsLearnSection.forEach((item) => {
+    const lsItems = template(item);
+    learnProjectsSection.innerHTML += lsItems;
+  });
+
+  const lsCompletedSection = lsArr.filter((item) => item.location === 'completed');
+  lsCompletedSection.forEach((item) => {
+    const lsItems = template(item);
+    completedProjectsSection.innerHTML += lsItems;
+  });
+
+  const dragItems = document.querySelectorAll('.section__drag-item');
+
+  // delete btns
+  const btnsDelete = document.querySelectorAll('.delete');
+  btnsDelete.forEach((btn) => {
+    btn.addEventListener('click', deleteItem);
+  });
+
+  drag(dragItems);
+  // retrive only unique items
+  // const lsNext = lsArr.reduce((acc, value) => {
+  //   if (!acc.includes(value.location)) {
+  //     acc.push(value.location);
+  //   }
+  //   return acc;
+  // }, []);
 };
 
 //addEventListeners
