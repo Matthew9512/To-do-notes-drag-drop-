@@ -9,28 +9,39 @@ const stateObject = {
   noteId: [],
 };
 
-//
-const currentItemData = (e) => {
+// click on input to save new item
+const currentItemClick = (e) => {
   const click = e.target;
   if (!click.classList.contains('section__btn')) return;
-  else {
-    const input = click.closest('.section').querySelector('.section__input');
-    stateObject.value = input.value;
-    stateObject.location = click.closest('.section');
-
-    addTask();
-
-    input.value = '';
-  }
+  newItemData(click);
 };
 
-//
+// press enter to save new item
+const currentItemPress = (e) => {
+  const click = e.target;
+  if (e.key === 'Enter') newItemData(click);
+};
+
+// data of new item => value and location
+const newItemData = (click) => {
+  const input = click.closest('.section').querySelector('.section__input');
+
+  if (!input.value) return;
+
+  stateObject.value = input.value;
+  stateObject.location = click.closest('.section').querySelector('.section__drag-area');
+
+  input.value = '';
+  input.blur();
+
+  addTask();
+};
+
+// render new task, update ls and activate drag functionality
 const addTask = () => {
-  const click = stateObject.location.querySelector('.section__drag-area');
-  console.log(click);
   // id of the task
   let id = new Date().getTime().toString();
-  let parentID = stateObject.location.dataset.location;
+  let parentID = stateObject.location.dataset.id;
 
   stateObject.noteId = id;
 
@@ -39,7 +50,7 @@ const addTask = () => {
       <p class="section__new-task">${stateObject.value}</p>
       <i class="delete fa-solid fa-xmark"></i>
     </div>`;
-  click.insertAdjacentHTML('afterbegin', newItem);
+  stateObject.location.insertAdjacentHTML('afterbegin', newItem);
 
   const dragItems = document.querySelectorAll('.section__drag-item');
   const btnsDelete = document.querySelectorAll('.delete');
@@ -52,7 +63,7 @@ const addTask = () => {
   drag(dragItems);
 };
 
-// ===
+// === DRAG ITEMS === //
 // drag and drop items
 const drag = (dragItems) => {
   dragItems.forEach((item) => {
@@ -62,16 +73,10 @@ const drag = (dragItems) => {
 
     item.addEventListener('dragend', () => {
       item.classList.remove('dragging');
+
+      updateLSItemsLocation(item);
     });
   });
-};
-
-// delete item
-const deleteItem = (e) => {
-  const parent = e.target.closest('.section__drag-area');
-  const target = parent.querySelector('.section__drag-item');
-  parent.removeChild(target);
-  removeLS(target);
 };
 
 // place of drag items to be moved
@@ -83,7 +88,15 @@ sectionDragArea.forEach((area) => {
   });
 });
 
-// === localStorage
+// delete item
+const deleteItem = (e) => {
+  const parent = e.target.closest('.section__drag-area');
+  const target = e.target.parentElement;
+  parent.removeChild(target);
+  removeLS(target);
+};
+
+// === localStorage === //
 // getLocalStorage
 const getLS = () => {
   const lsArr = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
@@ -104,6 +117,22 @@ const updateLS = (parentID) => {
   localStorage.setItem('notes', JSON.stringify(lsArr));
 };
 
+// update localStorage dragged items location
+const updateLSItemsLocation = (item) => {
+  // ID of parentElements where item was droped
+  const parentID = item.parentElement.id;
+
+  const lsArr = getLS();
+
+  // find dragged item in ls
+  const find = lsArr.find((value) => value.id === item.dataset.id);
+
+  // override dragged items location
+  find.location = parentID;
+
+  localStorage.setItem('notes', JSON.stringify(lsArr));
+};
+
 // remove item from localStorage
 const removeLS = (target) => {
   const lsArr = getLS();
@@ -112,7 +141,7 @@ const removeLS = (target) => {
 };
 
 // template to retrive item from localStorage
-const template = (item) => {
+const lsTemplate = (item) => {
   return `
     <div draggable="true" class="section__drag-item" data-id="${item.id}">
     <p class="section__new-task">${item.value}</p>
@@ -131,19 +160,19 @@ const loadDisplay = () => {
 
   const lsNextSection = lsArr.filter((item) => item.location === 'next');
   lsNextSection.forEach((item) => {
-    const lsItems = template(item);
+    const lsItems = lsTemplate(item);
     nextProjectsSection.innerHTML += lsItems;
   });
 
   const lsLearnSection = lsArr.filter((item) => item.location === 'learn');
   lsLearnSection.forEach((item) => {
-    const lsItems = template(item);
+    const lsItems = lsTemplate(item);
     learnProjectsSection.innerHTML += lsItems;
   });
 
   const lsCompletedSection = lsArr.filter((item) => item.location === 'completed');
   lsCompletedSection.forEach((item) => {
-    const lsItems = template(item);
+    const lsItems = lsTemplate(item);
     completedProjectsSection.innerHTML += lsItems;
   });
 
@@ -156,15 +185,9 @@ const loadDisplay = () => {
   });
 
   drag(dragItems);
-  // retrive only unique items
-  // const lsNext = lsArr.reduce((acc, value) => {
-  //   if (!acc.includes(value.location)) {
-  //     acc.push(value.location);
-  //   }
-  //   return acc;
-  // }, []);
 };
 
 //addEventListeners
-sectionsContainer.addEventListener('click', currentItemData);
+sectionsContainer.addEventListener('click', currentItemClick);
 document.addEventListener('DOMContentLoaded', loadDisplay);
+document.addEventListener('keyup', currentItemPress);
