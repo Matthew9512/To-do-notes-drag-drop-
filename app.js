@@ -1,4 +1,4 @@
-'use strict';
+import './scss/main.scss';
 
 const sectionsContainer = document.querySelector('.sections__container');
 const sectionDragArea = document.querySelectorAll('.section__drag-area');
@@ -10,20 +10,20 @@ const stateObject = {
 };
 
 // click on input to save new item
-const currentItemClick = (e) => {
+const currentItemClick = function (e) {
   const click = e.target;
   if (!click.classList.contains('section__btn')) return;
   newItemData(click);
 };
 
 // press enter to save new item
-const currentItemPress = (e) => {
+const currentItemPress = function (e) {
   const click = e.target;
   if (e.key === 'Enter') newItemData(click);
 };
 
 // data of new item => value and location
-const newItemData = (click) => {
+const newItemData = function (click) {
   const input = click.closest('.section').querySelector('.section__input');
 
   if (!input.value) return;
@@ -38,7 +38,7 @@ const newItemData = (click) => {
 };
 
 // render new task, update ls and activate drag functionality
-const addTask = () => {
+const addTask = function () {
   // id of the task
   let id = new Date().getTime().toString();
   let parentID = stateObject.location.dataset.id;
@@ -65,15 +65,17 @@ const addTask = () => {
 
 // === DRAG ITEMS === //
 // drag and drop items
-const drag = (dragItems) => {
+const drag = function (dragItems) {
   dragItems.forEach((item) => {
     item.addEventListener('dragstart', () => {
       item.classList.add('dragging');
+      sectionDragArea.forEach((area) => area.classList.add('active'));
+      console.log(sectionDragArea);
     });
 
     item.addEventListener('dragend', () => {
       item.classList.remove('dragging');
-
+      sectionDragArea.forEach((area) => area.classList.remove('active'));
       updateLSItemsLocation(item);
     });
   });
@@ -89,7 +91,7 @@ sectionDragArea.forEach((area) => {
 });
 
 // delete item
-const deleteItem = (e) => {
+const deleteItem = function (e) {
   const parent = e.target.closest('.section__drag-area');
   const target = e.target.parentElement;
   parent.removeChild(target);
@@ -98,7 +100,7 @@ const deleteItem = (e) => {
 
 // === localStorage === //
 // getLocalStorage
-const getLS = () => {
+const getLS = function () {
   const lsArr = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
   return lsArr;
 };
@@ -118,7 +120,7 @@ const updateLS = (parentID) => {
 };
 
 // update localStorage dragged items location
-const updateLSItemsLocation = (item) => {
+const updateLSItemsLocation = function (item) {
   // ID of parentElements where item was droped
   const parentID = item.parentElement.id;
 
@@ -134,14 +136,14 @@ const updateLSItemsLocation = (item) => {
 };
 
 // remove item from localStorage
-const removeLS = (target) => {
+const removeLS = function (target) {
   const lsArr = getLS();
   const lsItems = lsArr.filter((item) => item.id !== target.dataset.id);
   localStorage.setItem('notes', JSON.stringify(lsItems));
 };
 
 // template to retrive item from localStorage
-const lsTemplate = (item) => {
+const lsTemplate = function (item) {
   return `
     <div draggable="true" class="section__drag-item" data-id="${item.id}">
     <p class="section__new-task">${item.value}</p>
@@ -149,7 +151,7 @@ const lsTemplate = (item) => {
 };
 
 // === domcontentloaded function
-const loadDisplay = () => {
+const loadDisplay = function () {
   const nextProjectsSection = document.querySelector('#next');
   const learnProjectsSection = document.querySelector('#learn');
   const completedProjectsSection = document.querySelector('#completed');

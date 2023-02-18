@@ -84,6 +84,7 @@ button {
 $backgroundWhite: #fff;
 $backgroundBlue: #1943cf;
 $backgroundDarkBlue: #172a66;
+$backgroundDarkHover: #2c3d76;
 $backgroundBtnBlue: #1639ad;
 
 $fontColorBrown: hsl(25, 47%, 15%);
@@ -105,10 +106,16 @@ body {
 .container {
   margin: 1em;
 
-  .container-header {
+  &__header {
     text-align: center;
+    font-size: 1.2em;
+    font-style: italic;
+    margin-bottom: 1em;
+  }
+  &__header::first-line {
+    font-size: 1.5em;
+    font-style: normal;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 1em;
   }
 }

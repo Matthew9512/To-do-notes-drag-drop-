@@ -1,5 +1,7 @@
+@use 'base';
+
 .sections__container {
-  background-color: $backgroundBlue;
+  background-color: base.$backgroundBlue;
   display: flex;
   justify-content: center;
   align-items: top;
@@ -13,7 +15,7 @@
     width: 12em;
 
     &__header {
-      color: $fontColorBtnWhite;
+      color: base.$fontColorBtnWhite;
       opacity: 0.9;
     }
 
@@ -42,7 +44,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: $backgroundWhite;
+      background-color: base.$backgroundWhite;
       width: 100%;
       border-radius: 0.4em;
       padding: 0.5em 0.4em;
@@ -50,7 +52,9 @@
     }
 
     &__new-task {
-      width: 85%;
+      // width: 100%;
+      // margin: 1em;
+      margin-inline: auto;
       overflow-wrap: break-word;
       word-wrap: break-word;
       hyphens: auto;
@@ -60,14 +64,14 @@
       outline: none;
       border: none;
       width: 100%;
-      background-color: $backgroundBtnDarkBlue;
-      color: $fontColorBtnWhite;
+      background-color: base.$backgroundDarkBlue;
+      color: base.$fontColorBtnWhite;
       border-radius: 0.4em;
       padding: 0.5em 0.4em;
 
       &:hover {
         cursor: pointer;
-        background-color: $backgroundBtnHover;
+        background-color: base.$backgroundDarkHover;
       }
     }
   }
@@ -75,4 +79,9 @@
   .learn-section {
     margin-inline: 1em;
   }
+}
+
+.active {
+  background: rgba(193, 193, 193, 0.6);
+  border-radius: 0 0 0.5em 0.5em;
 }
